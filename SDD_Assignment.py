@@ -1,5 +1,7 @@
 ##SDD Assignment 
 ## Done by Ervin, Xin Yin, Xue Wen, Keene, Bi De
+from User import User
+
 
 field = [[[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]],
          [[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]],
@@ -25,7 +27,7 @@ field = [[[None,None],[None,None],[None,None],[None,None],[None,None],[None,None
 
 letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']
       
-        
+
 def draw_map():
     borders = "+-----"
     end = "+"
@@ -67,3 +69,4 @@ def draw_map():
         print(end)
 
 draw_map()
+testperson.printName()
