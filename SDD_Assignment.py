@@ -33,7 +33,14 @@ def draw_map():
     end = "+"
     rows = len(field)
     columns = len(field[0])
-    print("{:>6}{:>6}{:>6}".format("1","2","3"))
+    #print("{:>6}{:>6}{:>6}".format("1","2","3"))
+    for i in range(0, 19):
+        print("{:>6}".format(i), end="")
+    print("{:>6}".format("19"))
+    print()
+    
+    
+    
     print("  ",end="")
     for i in range(columns):
         print(borders,end="")
@@ -68,5 +75,43 @@ def draw_map():
             print(borders,end="")
         print(end)
 
-draw_map()
-testperson.printName()
+def show_main_menu():
+    while True:
+        print()
+        print("----------------")
+        print("| Ngee Ann City |")
+        print("----------------")
+        print("Build the most prosperous city!")
+        print()
+
+        print("Please select an option \n\
+        1. Start New Game\n\
+        2. Load Saved Game\n\
+        3. Display High Scores\n\
+        4. Exit")
+        option = input("Enter your choice: ")
+        if option == '1':
+                draw_map()
+                
+            
+
+        elif option == '2':
+                ## Add in code to read save file     
+                print("Map loaded from text file successfully!")
+            
+
+        elif option == '3':
+             print("High score in progress")
+    
+        elif option == '4':
+                print("Goodbye")
+            
+    
+        else:
+            print("Invalid option. Please enter a valid choice.")
+            return
+
+        
+  
+            
+show_main_menu()
