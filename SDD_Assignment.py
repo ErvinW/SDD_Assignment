@@ -3,6 +3,12 @@
 import random
 from User import User
 
+class Building:
+    def __init__(self, type):
+        self.name = type
+        self.row = None
+        self.col = None
+
 
 field = [[[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]],
          [[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]],
@@ -39,16 +45,18 @@ playerName = ""
 def init_turn(turn, score, coins):
     while True:
      turn += 1 
-     buildingOne = random.randint(0, 4)
-     buildingTwo = random.randint(0, 4)
-     buildingList = [buildingOne, buildingTwo]
+
+     buildingList = ['R', 'I', 'C', 'O', '*']
+     random2building = random.sample(buildingList, 2)
+
      draw_map()
      print("Turn: {} {:>10}{:>10}".format(str(turn), str(score), str(coins)))
      print("Options:")
      print("{:20}{:<20}{:>20}".format("1. Build", "2. Save and Exit", "3. Quit without saving"))
-     action = input("Enter an action")
+     action = input("Enter an action: ")
      if action == "1":
          print("Build")
+         print("Choose the building to build ({}/{})".format(random2building[0],random2building[1]))
         
      elif action == "2":
          print("game saved")
@@ -151,7 +159,14 @@ def show_main_menu():
             return
 
         
-  
+def build(turn, type):
+     building = Building()
+     if turn == 1:
+
+         position = input("Enter the position: ")
+         building.row = ''.join(filter(str.isalpha, position))
+         building.col = ''.join(filter(str.isdigit, position))
+
             
 
 
