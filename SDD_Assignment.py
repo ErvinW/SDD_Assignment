@@ -143,6 +143,7 @@ def show_main_menu():
         4. Exit")
         option = input("Enter your choice: ")
         if option == '1':
+                playerName = input("Username: ")    
                 init_turn(turn, score, coins)
                 
             
