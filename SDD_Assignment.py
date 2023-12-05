@@ -1,13 +1,7 @@
-##SDD Assignment 
-## Done by Ervin, Xin Yin, Xue Wen, Keene, Bi De
+# SDD Assignment 
+# Done by Ervin, Xin Yin, Xue Wen, Keene, Bi De
 import random
 from User import User
-
-class Building:
-    def __init__(self, type):
-        self.name = type
-        self.row = None
-        self.col = None
 
 
 field = [[[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]],
@@ -32,12 +26,18 @@ field = [[[None,None],[None,None],[None,None],[None,None],[None,None],[None,None
          [[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None],[None,None]]
     ]
 
+
+
 letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']
 
 playerName = ""
 
 
-
+class Building:
+    def __init__(self):
+        self.type = None
+        self.row = None
+        self.col = None
 
 
 
@@ -56,7 +56,8 @@ def init_turn(turn, score, coins):
      action = input("Enter an action: ")
      if action == "1":
          print("Build")
-         print("Choose the building to build ({}/{})".format(random2building[0],random2building[1]))
+         choice = input("Choose the building to build ({}/{})".format(random2building[0],random2building[1]))
+         build(turn, choice)
         
      elif action == "2":
          print("game saved")
@@ -159,16 +160,83 @@ def show_main_menu():
             return
 
         
-def build(turn, type):
+def build(turn, buildingType):
      building = Building()
+     building.type = buildingType
+     position = input("Enter the position: ")
+     building.col = int(position[1])
+     building.row = ord(position[0].upper()) - ord('A')
      if turn == 1:
+         field[building.row][building.col][0] = buildingType
+     else:
+        index = letters.index(position[0].upper())
+        check = validPosition(building.row, building.col)
+        if check == True:
+            field[building.row][building.col][0] = buildingType
+        else:
+            while check != True:
+                position = input("Enter the position: ")
+                building.col = int(position[1])
+                building.row = ord(position[0].upper()) - ord('A')
+                check = validPosition(building.row, building.col)
+            field[building.row][building.col][0] = buildingType
+        
 
-         position = input("Enter the position: ")
-         building.row = ''.join(filter(str.isalpha, position))
-         building.col = ''.join(filter(str.isdigit, position))
+        
 
-            
+    
+def validPosition(row, col):
+    # A1
+    if row == 0 and col == 0:
+        if field[row+1][col][0] != None or field[row][col+1][0] != None or field[row+1][col+1][0] != None:
+            return True
+        return False
+    # A19
+    if row == 0 and col == 19:
+        if field[row][col-1][0] != None or field[row+1][col][0] != None or field[row-1][col+1][0] != None:
+            return True
+        return False
+    # T0
+    if row == 19 and col == 0:
+        if field[row][col+1][0] != None or field[row-1][col][0] != None or field[row-1][col+1][0] != None:
+            return True
+        return False
+    # T19
+    if row == 19 and col == 19:
+        if field[row][col-1][0] != None or field[row-1][col][0] != None or field[row-1][col-1][0] != None:
+            return True
+        return False
+    # Row A
+    if row == 0:
+        if field[row][col+1][0] != None or field[row][col-1][0] != None or field[row+1][col][0] != None or field[row+1][col-1][0] != None or field[row+1][col+1][0] != None:
+            return True
+        return False
+    # Row T
+    if row == 19:
+        if field[row][col+1][0] != None or field[row][col-1][0] != None or field[row-1][col][0] != None or field[row-1][col-1][0] != None or field[row-1][col+1][0] != None:
+            return True
+        return False
+    # Column 0
+    if col == 0:
+        if field[row+1][col][0] != None or field[row-1][col][0] != None or field[row][col+1][0] != None or field[row-1][col-1][0] != None or field[row+1][col+1][0] != None:
+            return True
+        return False
+    # Column 19
+    if col == 0:
+        if field[row+1][col][0] != None or field[row-1][col][0] != None or field[row][col-1][0] != None or field[row-1][col-1][0] != None or field[row+1][col+1][0] != None:
+            return True
+        return False
+    # The rest 
+    for i in range(row-1,row+2):
+        for x in range(col-1,col+2):
+            if field[i][x][0] != None:
+                return True
+    return False
 
+
+# (1,2)  (1,3)  (1,4)           
+# (2,2)  (2,3)  (2,4)  
+# (3,2)  (3,3)  (3,4)
 
 
 show_main_menu()
