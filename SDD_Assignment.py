@@ -62,6 +62,7 @@ def init_turn(turn, score, coins):
              turn -= 1
              return
          else:
+             coins -=1
              build(turn, choice)
         
      elif action == "2":
