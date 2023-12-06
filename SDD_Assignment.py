@@ -164,7 +164,7 @@ def build(turn, buildingType):
      building = Building()
      building.type = buildingType
      position = input("Enter the position: ")
-     building.col = int(position[1])
+     building.col = int(position[1:])
      building.row = ord(position[0].upper()) - ord('A')
      if turn == 1:
          field[building.row][building.col][0] = buildingType
@@ -176,7 +176,7 @@ def build(turn, buildingType):
         else:
             while check != True:
                 position = input("Enter the position: ")
-                building.col = int(position[1])
+                building.col = int(position[1:])
                 building.row = ord(position[0].upper()) - ord('A')
                 check = validPosition(building.row, building.col)
             field[building.row][building.col][0] = buildingType
