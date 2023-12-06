@@ -56,8 +56,14 @@ def init_turn(turn, score, coins):
      action = input("Enter an action: ")
      if action == "1":
          print("Build")
-         choice = input("Choose the building to build ({}/{})".format(random2building[0],random2building[1]))
-         build(turn, choice)
+         choice = input("Choose the building to build ({}/{})".format(random2building[0],random2building[1])).upper()
+         if choice not in buildingList:
+             print("Invalid building type.")
+             turn -= 1
+             return
+         else:
+             coins -=1
+             build(turn, choice)
         
      elif action == "2":
          print("game saved")
@@ -138,6 +144,7 @@ def show_main_menu():
         4. Exit")
         option = input("Enter your choice: ")
         if option == '1':
+                playerName = input("Username: ")    
                 init_turn(turn, score, coins)
                 
             
