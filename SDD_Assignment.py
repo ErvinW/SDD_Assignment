@@ -61,13 +61,14 @@ def init_turn(turn, score, coins):
      if action == "1":
          print("Build")
          choice = input("Choose the building to build ({}/{}): ".format(random2building[0],random2building[1])).upper()
-         if choice not in buildingList:
+         while choice not in buildingList:
              print("Invalid building type.")
-             turn -= 1
-             return
+             choice = input("Choose the building to build ({}/{}): ".format(random2building[0],random2building[1])).upper()
+             #turn -= 1
+             
+         
          else:
              coins -=1
-             print("Points: "+ str(score))
              btype, row, col = build(turn, choice)
              score_to_add, coins_to_add = calculateScore(btype, row, col)
              score += score_to_add
@@ -79,7 +80,7 @@ def init_turn(turn, score, coins):
      
      elif action == "3":
          print("Exited")
-         break
+         return
      else:
          print("Next turn")
          init_turn(turn, score+3, coins-1)
