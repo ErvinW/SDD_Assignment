@@ -100,7 +100,7 @@ def saveGame(playerName, turn, score, coins):
     
     datafile = open("SaveFile.txt", "w")
     for h in saved_list:
-        datafile.write("{}".format(h))
+        datafile.write("{},".format(h))
     datafile.write("\n")
     
     for i in field:
@@ -113,6 +113,28 @@ def saveGame(playerName, turn, score, coins):
     datafile.close()
     print("Game Saved \n")
  
+ 
+    
+def loadGame():
+    datafile = open("SaveFile.txt", "r")
+    lines = datafile.readlines()
+    playerSetting = lines[0].split(",")
+    saved_field = lines[1:]
+    
+    #field = saved_field
+    PlayerName = playerSetting[3]
+    turn  = playerSetting[0]
+    score = playerSetting[1]
+    coins = playerSetting[2]
+    
+    for i in range(len(saved_field)):
+        temp = saved_field[i].split("-")
+        for j in range(len(temp)):
+            if temp[j].strip("\n") == "[None, None]" or temp[j].strip("\n") == "[None, None, None]":
+                field[i][j] = [None,None]
+            else:
+                unit = temp[j].strip("\n").strip("[").strip("]").split(",")
+                field[i][j] = [unit[0].strip("'"),None, None]
     
      
 def draw_map():
@@ -166,6 +188,7 @@ def show_main_menu():
         score = 0 
         coins = 16
         turn = 0
+        playerName = ""
         print()
         print("----------------")
         print("| Ngee Ann City |")
@@ -183,7 +206,8 @@ def show_main_menu():
                 playerName = input("Username: ")    
                 init_turn(playerName, turn, score, coins)
         elif option == '2':
-                ## Add in code to read save file     
+                loadGame()
+                init_turn(playerName, turn, score, coins)
                 print("Map loaded from text file successfully!")
             
 
