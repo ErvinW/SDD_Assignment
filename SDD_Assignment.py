@@ -34,6 +34,10 @@ playerName = ""
 #score = 0
 #coins = 16
 
+
+
+    
+
 class Building:
     def __init__(self):
         self.type = None
@@ -46,7 +50,7 @@ class Game:
         self.score = 0
 
 
-def init_turn(turn, score, coins):
+def init_turn(playerName, turn, score, coins):
     while True:
      turn += 1 
 
@@ -75,7 +79,7 @@ def init_turn(turn, score, coins):
              coins += coins_to_add
         
      elif action == "2":
-         print("game saved")
+         saveGame(playerName, turn, score, coins)
          return
      
      elif action == "3":
@@ -86,7 +90,30 @@ def init_turn(turn, score, coins):
          init_turn(turn, score+3, coins-1)
      
      
-
+def saveGame(playerName, turn, score, coins):
+    
+    saved_list = []
+    saved_list.append(turn)
+    saved_list.append(score)
+    saved_list.append(coins)
+    saved_list.append(playerName)
+    
+    datafile = open("SaveFile.txt", "w")
+    for h in saved_list:
+        datafile.write("{}".format(h))
+    datafile.write("\n")
+    
+    for i in field:
+        row = []
+        for j in i:
+            row.append(str(j))
+        datafile.writelines("-".join(row))
+        datafile.write("\n")
+        
+    datafile.close()
+    print("Game Saved \n")
+ 
+    
      
 def draw_map():
     borders = "+-----"
@@ -154,7 +181,7 @@ def show_main_menu():
         option = input("Enter your choice: ")
         if option == '1':
                 playerName = input("Username: ")    
-                init_turn(turn, score, coins)
+                init_turn(playerName, turn, score, coins)
         elif option == '2':
                 ## Add in code to read save file     
                 print("Map loaded from text file successfully!")
