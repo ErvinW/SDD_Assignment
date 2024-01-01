@@ -46,7 +46,7 @@ class Building:
 
 class Game:
     def __init__(self):
-        self.coins = 1
+        self.coins = 16
         self.score = 0
 
 def updateHighScores(playerName, score):
@@ -255,7 +255,7 @@ def draw_map():
 def show_main_menu():
     while True:
         score = 0 
-        coins = 1
+        coins = 16
         turn = 0
         playerName = ""
         print()
