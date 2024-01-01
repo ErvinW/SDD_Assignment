@@ -46,12 +46,73 @@ class Building:
 
 class Game:
     def __init__(self):
-        self.coins = 16
+        self.coins = 1
         self.score = 0
 
+def updateHighScores(playerName, score):
+    file = open("ScoreFile.txt", "r")
+    f = file.readlines()
+    file.close()
+    emptyFile = False
+
+    if len(f) == 0:
+        emptyFile = True
+
+    newList = []
+    for line in f:
+        newList.append(line.strip())
+
+    scoreList = []
+    for x in range(1, len(newList), 2):
+            scoreList.append(int(newList[x]))
+        
+    if len(newList) == 20:
+        for index in range(0, len(scoreList), 1):
+            if scoreList[index] < score:
+                newList.pop(19)
+                newList.pop(18)
+                newList.insert(index * 2, playerName)
+                newList.insert(index * 2 + 1, score)
+                #scoreList.pop(9)
+                #scoreList.insert(index, score)
+                break
+            elif scoreList[index] == score:
+                if scoreList[9] == score:
+                    return False
+                else:
+                    newList.pop(19)
+                    newList.pop(18)
+                    newList.insert(index * 2, playerName)
+                    newList.insert(index *2 + 1, score)
+                    #scoreList.pop(9)
+                    #scoreList.insert(index, score)
+                    break
+    else:
+        for index in range(0, len(scoreList), 1):
+            if scoreList[index] <= score:
+                newList.insert(index * 2, playerName)
+                newList.insert(index * 2 + 1, score)
+                break
+            if index == len(scoreList):
+                return False
+    with open("ScoreFile.txt", "w") as file:
+        if emptyFile == True:
+            file.write(playerName + "\n" + str(score) + "\n")
+        else:
+            for value in newList:
+                file.write(str(value) + "\n")
+    file.close()
+    return True
 
 def init_turn(playerName, turn, score, coins):
     while True:
+     if coins == 0 :
+         print("\nGame over. Your score is " + str(score))
+         boolValue = updateHighScores(playerName, score)
+         if boolValue == True:
+             print("\nCongratulations! Your score is in the top 10!")
+         return
+     
      turn += 1 
 
      buildingList = ['R', 'I', 'C', 'O', '*']
@@ -112,8 +173,6 @@ def saveGame(playerName, turn, score, coins):
         
     datafile.close()
     print("Game Saved \n")
- 
- 
     
 def loadGame():
     datafile = open("SaveFile.txt", "r")
@@ -136,6 +195,16 @@ def loadGame():
                 unit = temp[j].strip("\n").strip("[").strip("]").split(",")
                 field[i][j] = [unit[0].strip("'"),None, None]
     
+def showHighScores():
+    datafile = open("ScoreFile.txt", "r")
+    lines = datafile.readlines()
+    newList = []
+    for line in lines:
+        newList.append(line.strip())
+    print("\n")
+    for x in range (0, len(newList), 2):
+        print(newList[x] + ", " + newList[x + 1])
+    datafile.close()
      
 def draw_map():
     borders = "+-----"
@@ -186,7 +255,7 @@ def draw_map():
 def show_main_menu():
     while True:
         score = 0 
-        coins = 16
+        coins = 1
         turn = 0
         playerName = ""
         print()
@@ -212,7 +281,7 @@ def show_main_menu():
             
 
         elif option == '3':
-             print("High score in progress")
+             showHighScores()
     
         elif option == '4':
                 print("Goodbye")
@@ -220,7 +289,6 @@ def show_main_menu():
         else:
             print("Invalid option. Please enter a valid choice.")
             return
-
         
 def build(turn, buildingType):
      building = Building()
