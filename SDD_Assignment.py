@@ -219,7 +219,7 @@ def show_main_menu():
                 return False
         else:
             print("Invalid option. Please enter a valid choice.")
-            return
+            
 
         
 def build(turn, buildingType):
