@@ -46,7 +46,7 @@ class Building:
 
 class Game:
     def __init__(self):
-        self.coins = 16
+        self.coins = 0
         self.score = 0
 
 def updateHighScores(playerName, score):
@@ -67,6 +67,8 @@ def updateHighScores(playerName, score):
             scoreList.append(int(newList[x]))
         
     if len(newList) == 20:
+        if scoreList[9] > score:
+            return False
         for index in range(0, len(scoreList), 1):
             if scoreList[index] < score:
                 newList.pop(19)
@@ -87,6 +89,7 @@ def updateHighScores(playerName, score):
                     #scoreList.pop(9)
                     #scoreList.insert(index, score)
                     break
+            
     else:
         for index in range(0, len(scoreList), 1):
             if scoreList[index] <= score:
@@ -259,7 +262,7 @@ def draw_map():
 def show_main_menu():
     while True:
         score = 0 
-        coins = 16
+        coins = 0
         turn = 0
         playerName = ""
         print()

@@ -1,8 +1,20 @@
-testErvin
-24
+t1
+40
+t2
+30
+t3
+29
+t4
+28
+t5
+28
+t5
+27
+testscore
+16
 test8
 4
 test9
 3
-Bi De
-1
+11
+2
