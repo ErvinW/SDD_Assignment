@@ -182,9 +182,9 @@ def loadGame():
     
     #field = saved_field
     PlayerName = playerSetting[3]
-    turn  = playerSetting[0]
-    score = playerSetting[1]
-    coins = playerSetting[2]
+    turn  = int(playerSetting[0])
+    score = int(playerSetting[1])
+    coins = int(playerSetting[2])
     
     for i in range(len(saved_field)):
         temp = saved_field[i].split("-")
@@ -194,6 +194,8 @@ def loadGame():
             else:
                 unit = temp[j].strip("\n").strip("[").strip("]").split(",")
                 field[i][j] = [unit[0].strip("'"),None, None]
+                
+    return PlayerName, turn, score, coins 
     
 def showHighScores():
     datafile = open("ScoreFile.txt", "r")
@@ -275,7 +277,8 @@ def show_main_menu():
                 playerName = input("Username: ")    
                 init_turn(playerName, turn, score, coins)
         elif option == '2':
-                loadGame()
+                PlayerName, turn, score, coins = loadGame()
+                turn -=1
                 init_turn(playerName, turn, score, coins)
                 print("Map loaded from text file successfully!")
             
