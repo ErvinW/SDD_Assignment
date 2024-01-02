@@ -204,8 +204,10 @@ def showHighScores():
     for line in lines:
         newList.append(line.strip())
     print("\n")
+    y = 1
     for x in range (0, len(newList), 2):
-        print(newList[x] + ", " + newList[x + 1])
+        print(str(y) + ". " + newList[x] + ": " + newList[x + 1])
+        y += 1
     datafile.close()
      
 def draw_map():
