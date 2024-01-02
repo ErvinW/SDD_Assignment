@@ -46,8 +46,16 @@ class Building:
 
 class Game:
     def __init__(self):
-        self.coins = 0
+        self.coins = 16
         self.score = 0
+
+def checkIfFull(field):
+    flat_list = [item for sublist1 in field for sublist2 in sublist1 for item in sublist2]
+
+    # Count the number of non-types (in this case, None elements)
+    count_non_types = sum(1 for element in flat_list if element is not None)
+    return count_non_types
+
 
 def updateHighScores(playerName, score):
     file = open("ScoreFile.txt", "r")
@@ -109,7 +117,8 @@ def updateHighScores(playerName, score):
 
 def init_turn(playerName, turn, score, coins):
     while True:
-     if coins == 0 :
+     c = checkIfFull(field)
+     if coins == 0 or  c == 400:
          print("\nGame over. Your score is " + str(score))
          boolValue = updateHighScores(playerName, score)
          if boolValue == True:
@@ -262,7 +271,7 @@ def draw_map():
 def show_main_menu():
     while True:
         score = 0 
-        coins = 0
+        coins = 16
         turn = 0
         playerName = ""
         print()
