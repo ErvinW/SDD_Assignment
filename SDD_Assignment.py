@@ -123,6 +123,8 @@ def init_turn(playerName, turn, score, coins):
          boolValue = updateHighScores(playerName, score)
          if boolValue == True:
              print("\nCongratulations! Your score is in the top 10!")
+             
+         showHighScores()
          return
      
      turn += 1 
@@ -218,6 +220,7 @@ def showHighScores():
         newList.append(line.strip())
     print("\n")
     y = 1
+    print("LEADERBOARD\n")
     for x in range (0, len(newList), 2):
         print(str(y) + ". " + newList[x] + ": " + newList[x + 1])
         y += 1
