@@ -159,8 +159,9 @@ def init_turn(playerName, turn, score, coins):
          print("Exited")
          return
      else:
-         print("Next turn")
-         init_turn(turn, score+3, coins-1)
+         print("Invalid input try again")
+         turn -=1
+         
      
      
 def saveGame(playerName, turn, score, coins):
