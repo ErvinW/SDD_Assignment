@@ -193,6 +193,7 @@ def init_turn(turn, score, coins):
      random2building = random.sample(buildingList, 2)
 
      draw_map()
+     print(' R: Residential\n I: Indsutry\n C: Commercial\n O: Park\n *: Road\n')
      print("Turn: {:<10} Score: {:<10}  Coins: {:<10}".format(str(turn), str(score), str(coins)))
      print("Options:")
      print("{:20}{:<20}{:>20}".format("1. Build", "2. Save and Exit", "3. Quit without saving"))
