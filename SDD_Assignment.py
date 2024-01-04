@@ -376,8 +376,10 @@ def build(turn, buildingType):
      nums = []
      building.type = buildingType
      position = input("Enter the position: ")
+     building.col = int(position[1:])
+     building.row = ord(position[0].upper()) - ord('A')
      # Input validation
-     while not len(position) in [2, 3] or not position[0].isalpha() or not position[1:].isdigit():
+     while (not len(position) in [2, 3] or not position[0].isalpha() or not position[1:].isdigit()) and field[building.row][building.col][0] != None:
          print("Invalid position")
          position = input("Enter the position: ")
         
