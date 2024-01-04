@@ -31,11 +31,6 @@ field = [[[None,None],[None,None],[None,None],[None,None],[None,None],[None,None
 letters = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T']
 
 playerName = ""
-#score = 0
-#coins = 16
-
-
-
     
 
 class Building:
@@ -372,9 +367,17 @@ def show_main_menu():
             return
         
 def build(turn, buildingType):
+     nums = ['0','1','2','3','4','5','6','7','8','9'] 
      building = Building()
+     nums = []
      building.type = buildingType
      position = input("Enter the position: ")
+     # Input validation
+     while not len(position) in [2, 3] or not position[0].isalpha() or not position[1:].isdigit():
+         print("Invalid position")
+         position = input("Enter the position: ")
+        
+     # Game logic
      building.col = int(position[1:])
      building.row = ord(position[0].upper()) - ord('A')
      if turn == 1:
@@ -388,6 +391,7 @@ def build(turn, buildingType):
             return buildingType, building.row, building.col
         else:
             while check != True:
+                print("Buildings must be built orthogonally adjacent to existing buildings.")
                 position = input("Enter the position: ")
                 building.col = int(position[1:])
                 building.row = ord(position[0].upper()) - ord('A')
