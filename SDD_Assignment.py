@@ -216,7 +216,7 @@ def init_turn(turn, score, coins):
              coins += coins_to_add
         
      elif action == "2":
-         saveGame(playerName, turn, score, coins)
+         saveGame(turn, score, coins)
          return
      
      elif action == "3":
