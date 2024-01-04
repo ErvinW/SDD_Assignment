@@ -175,12 +175,15 @@ def init_turn(turn, score, coins):
     while True:
      c = checkIfFull(field)
      if coins == 0 or  c == 400:
-         print("\nGame over. Your score is " + str(score))
          boolValue = checkHighScores(score)
          if boolValue == True:
+             print("\nGame over. Your score is " + str(score))
              print("\nCongratulations! Your score is in the top 10!")
              playerName = input("Username: ")
              updateHighScores(playerName, score)
+             showHighScores()
+         else:
+             print("\nGame over. Your score is " + str(score))
              showHighScores()
          return
      
