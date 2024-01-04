@@ -57,6 +57,66 @@ def checkIfFull(field):
     return count_non_types
 
 
+def checkHighScores(score):
+    file = open("ScoreFile.txt", "r")
+    f = file.readlines()
+    file.close()
+    emptyFile = False
+
+    if len(f) == 0:
+        emptyFile = True
+
+    newList = []
+    for line in f:
+        newList.append(line.strip())
+
+    scoreList = []
+    for x in range(1, len(newList), 2):
+            scoreList.append(int(newList[x]))
+        
+    if len(newList) == 20:
+        if scoreList[9] > score:
+            return False
+        for index in range(0, len(scoreList), 1):
+            if scoreList[index] < score:
+                newList.pop(19)
+                newList.pop(18)
+                newList.insert(index * 2, playerName)
+                newList.insert(index * 2 + 1, score)
+                #scoreList.pop(9)
+                #scoreList.insert(index, score)
+                break
+            elif scoreList[index] == score:
+                if scoreList[9] == score:
+                    return False
+                else:
+                    newList.pop(19)
+                    newList.pop(18)
+                    newList.insert(index * 2, playerName)
+                    newList.insert(index *2 + 1, score)
+                    #scoreList.pop(9)
+                    #scoreList.insert(index, score)
+                    break
+            
+    else:
+        for index in range(0, len(scoreList), 1):
+            if scoreList[index] <= score:
+                newList.insert(index * 2, playerName)
+                newList.insert(index * 2 + 1, score)
+                break
+            if index == len(scoreList):
+                return False
+            '''
+    with open("ScoreFile.txt", "w") as file:
+        if emptyFile == True:
+            file.write(playerName + "\n" + str(score) + "\n")
+        else:
+            for value in newList:
+                file.write(str(value) + "\n")
+    file.close()
+    '''
+    return True
+
 def updateHighScores(playerName, score):
     file = open("ScoreFile.txt", "r")
     f = file.readlines()
@@ -106,6 +166,7 @@ def updateHighScores(playerName, score):
                 break
             if index == len(scoreList):
                 return False
+            
     with open("ScoreFile.txt", "w") as file:
         if emptyFile == True:
             file.write(playerName + "\n" + str(score) + "\n")
@@ -115,16 +176,17 @@ def updateHighScores(playerName, score):
     file.close()
     return True
 
-def init_turn(playerName, turn, score, coins):
+def init_turn(turn, score, coins):
     while True:
      c = checkIfFull(field)
      if coins == 0 or  c == 400:
          print("\nGame over. Your score is " + str(score))
-         boolValue = updateHighScores(playerName, score)
+         boolValue = checkHighScores(score)
          if boolValue == True:
              print("\nCongratulations! Your score is in the top 10!")
-             
-         showHighScores()
+             playerName = input("Username: ")
+             updateHighScores(playerName, score)
+             showHighScores()
          return
      
      turn += 1 
@@ -166,13 +228,13 @@ def init_turn(playerName, turn, score, coins):
          
      
      
-def saveGame(playerName, turn, score, coins):
+def saveGame(turn, score, coins):
     
     saved_list = []
     saved_list.append(turn)
     saved_list.append(score)
     saved_list.append(coins)
-    saved_list.append(playerName)
+    #saved_list.append(playerName)
     
     datafile = open("SaveFile.txt", "w")
     for h in saved_list:
@@ -196,7 +258,7 @@ def loadGame():
     saved_field = lines[1:]
     
     #field = saved_field
-    PlayerName = playerSetting[3]
+    #PlayerName = playerSetting[3]
     turn  = int(playerSetting[0])
     score = int(playerSetting[1])
     coins = int(playerSetting[2])
@@ -210,7 +272,7 @@ def loadGame():
                 unit = temp[j].strip("\n").strip("[").strip("]").split(",")
                 field[i][j] = [unit[0].strip("'"),None, None]
                 
-    return PlayerName, turn, score, coins 
+    return turn, score, coins 
     
 def showHighScores():
     datafile = open("ScoreFile.txt", "r")
@@ -274,10 +336,9 @@ def draw_map():
 
 def show_main_menu():
     while True:
-        score = 0 
+        score = 0
         coins = 16
         turn = 0
-        playerName = ""
         print()
         print("----------------")
         print("| Ngee Ann City |")
@@ -291,9 +352,8 @@ def show_main_menu():
         3. Display High Scores\n\
         4. Exit")
         option = input("Enter your choice: ")
-        if option == '1':
-                playerName = input("Username: ")    
-                init_turn(playerName, turn, score, coins)
+        if option == '1':    
+                init_turn(turn, score, coins)
         elif option == '2':
                 PlayerName, turn, score, coins = loadGame()
                 turn -=1
