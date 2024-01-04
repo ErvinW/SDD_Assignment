@@ -355,9 +355,9 @@ def show_main_menu():
         if option == '1':    
                 init_turn(turn, score, coins)
         elif option == '2':
-                PlayerName, turn, score, coins = loadGame()
+                turn, score, coins = loadGame()
                 turn -=1
-                init_turn(playerName, turn, score, coins)
+                init_turn(turn, score, coins)
                 print("Map loaded from text file successfully!")
             
 
