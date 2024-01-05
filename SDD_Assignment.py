@@ -201,7 +201,7 @@ def init_turn(turn, score, coins):
      if action == "1":
          print("Build")
          choice = input("Choose the building to build ({}/{}): ".format(random2building[0],random2building[1])).upper()
-         while choice not in buildingList:
+         while choice not in random2building:
              print("Invalid building type.")
              choice = input("Choose the building to build ({}/{}): ".format(random2building[0],random2building[1])).upper()
              #turn -= 1
